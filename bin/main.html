@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartinator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+</head>
+<body>
+<div data-role="page" data-dom-cache="false" id="tbd">
+    <div data-role="content">
+
+        <p>
+            <audio id="player" controls>
+            Your browser does not support the audio element.
+            </audio>
+        </p>
+
+        <ul data-role="listview">
+            <li id="notice"><a href="#">Notification area<span class="ui-li-count">0</span></a></li>
+        </ul>
+
+	<p>
+	</p>
+
+        <div data-role="navbar" id="selector">
+	    <ul>
+                <li id="no-plugin"><a href="#" data-ajax="false">No plugins loaded</a></li>
+	    </ul>
+        </div>
+
+        <script>
+            var plugins = [
+	        { "url" : "http://localhost:3000" }
+	    ];
+
+	    function loadPlugin (plugin) {
+
+	        console.log("url: " + plugin.url);
+
+	        // TODO: get plugin name and other info from service.  Return if service not found
+
+	        $("#no-plugin").remove();
+                navbarHandler.addNewNavBarElement('selector','el4',plugin.url);
+
+	    };
+
+	    var navbarHandler = {
+		addNewNavBarElement:function(navBarID, newElementID, newElementText) {
+		    var navbar = $("#" + navBarID);
+
+		    var li = $("<li></li>");        
+		    var a  = $("<a></a>");
+		    a.attr("id", newElementID).text(newElementText);
+		    li.append(a);
+
+		    navbar = navbarHandler.clearNavBarStyle(navbar);
+
+		    navbar.navbar("destroy");
+		    li.appendTo($("#" + navBarID + " ul"));
+		    navbar.navbar();
+		},
+		clearNavBarStyle:function(navbar){
+		    navbar.find("*").andSelf().each(function(){
+			$(this).removeClass(function(i, cn){
+			    var matches = cn.match (/ui-[\w\-]+/g) || [];
+			    return (matches.join (' '));
+			});
+			if ($(this).attr("class") == "") {
+			    $(this).removeAttr("class");
+			}
+		    });
+		    return navbar;   
+		}
+	    }
+
+
+            $(document).on("pagecreate",function(){
+
+	        plugins.forEach( loadPlugin );
+
+	    });
+        </script>
+    </div><!-- /content -->
+</div><!-- /page -->
+</body>
+</html>
