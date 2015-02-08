@@ -1,0 +1,1 @@
+Framework for browser client with "plugin" services.
