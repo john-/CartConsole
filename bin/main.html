@@ -81,6 +81,7 @@
 		    $( "#switcher" ).tabs({
 			activate: function( event, ui ) { 
 			    var func = ui.newPanel.attr('id') + '_page';
+                            console.log("about to execute: " + func);
 			    window[func]();
 		    }    });
 
@@ -98,7 +99,7 @@
 		.done(function( script, textStatus ) {
 	    })
 		.fail(function( jqxhr, settings, error ) {
-		    console.log("Triggered ajaxError handler: " + key.url + " error: " + error);
+		    console.log("Script load error: " + key.url + " error: " + error);
 	    });
 
 
