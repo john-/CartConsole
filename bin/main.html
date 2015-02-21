@@ -22,6 +22,14 @@
     <div data-role="tabs" id="switcher">
     </div>
 
+<!--
+    <div data-role="popup" id="scanner_popup"><form>
+        <p>Some long text to see if squelch slider gets bigger</p>
+        <input type="text" name="name" id="basic" value=""/>
+        <input type="range" data-show-value="true" name="squelch" id="squelch" value="60" min="0" max="100" />
+    </form>
+    </div>
+-->
     <!--
     <div data-role="tabs" id="switcher">
 	<div data-role="navbar" id="blah">
@@ -64,20 +72,27 @@
 			    .append(
 				$('<a/>', {
 				    text: plug,
-				    href: "#" + plug.toLowerCase()
+				    href: "#" + plug.toLowerCase(),
+                                    //id: 'bttn_' + plug.toLowerCase()
 				})
 				).appendTo("#options ul");
-		    });
 
-		    plugs_on.forEach( function(plug) {
 			$('<div/>', {
 			    id: plug.toLowerCase()
 			}).appendTo("#switcher");
-
 		    });
+
+                    // long press on button to bring up config screen
+                    $( '#options ul li a' ).on( "taphold", function( event ) {
+                        var config = $( this ).text().toLowerCase() + '_config';
+                        console.log('taphold load: ' + config);
+                        window[config]();
+                        //$( config ).popup( "open" );
+                    });
 
 		    $( "#switcher" ).tabs( "refresh" );
 
+                    // call service's page loader when tab is selected
 		    $( "#switcher" ).tabs({
 			activate: function( event, ui ) { 
 			    var func = ui.newPanel.attr('id') + '_page';
@@ -101,7 +116,6 @@
 		.fail(function( jqxhr, settings, error ) {
 		    console.log("Script load error: " + key.url + " error: " + error);
 	    });
-
 
 	});
     };
