@@ -134,7 +134,7 @@
 	console.log(clip);
 	if (clip) {
 	    // TODO:  Why can't I update the text as easy as the queue depth number
-	    $('#notice a').html(clip.designator + '<span class="ui-li-count">' + clips.length + '</span>');
+	    $('#notice a').html(clip.label + '<span class="ui-li-count">' + clips.length + '</span>');
 	    player.src = clip.url + '?file=' + clip.file;
 	    player.play();
 	}
