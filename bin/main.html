@@ -3,14 +3,14 @@
 <head>
     <title>Cart Console</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="http://code.jquery.com/jquery-1.11.2.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+    <link rel="stylesheet" href="http://172.16.1.16/jquery/jquery.mobile-1.4.5.min.css" />
+    <script src="http://172.16.1.16/jquery/jquery-1.11.2.js"></script>
+    <script src="http://172.16.1.16/jquery/jquery.mobile-1.4.5.js"></script>
 </head>
 <body>
 <div data-role="page" data-dom-cache="false" id="main">
     <p>
-	<audio id="player" controls>
+	<audio id="player" controls autoplay>
 	Your browser does not support the audio element.
 	</audio>
     </p>
@@ -48,8 +48,8 @@
 
 <script>
     var plugins = [
-	{ "url" : "http://localhost:3000" },
-	{ "url" : "http://localhost:3001" }
+	{ "url" : "http://172.16.1.16:3000" },
+	{ "url" : "http://172.16.1.16:3001" }
     ];
 
     function loadPlugins () {
@@ -85,7 +85,6 @@
                     // long press on button to bring up config screen
                     $( '#options ul li a' ).on( "taphold", function( event ) {
                         var config = $( this ).text().toLowerCase() + '_config';
-                        console.log('taphold load: ' + config);
                         window[config]();
                         //$( config ).popup( "open" );
                     });
@@ -121,28 +120,52 @@
     };
 
     var player = document.getElementById('player');
+    player.addEventListener('error', function (e) {
+
+        switch (e.target.error.code) {
+            case e.target.error.MEDIA_ERR_ABORTED:
+                console.log('You aborted playback.');
+                break;
+            case e.target.error.MEDIA_ERR_NETWORK:
+                console.log('A network error caused the audio download to fail.');
+                break;
+            case e.target.error.MEDIA_ERR_DECODE:
+                console.log('The audio playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+                break;
+            case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                console.log('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
+	        next_xmit();
+                break;
+            default:
+                console.log('An unknown error occurred.');
+            break;
+        }
+
+    });
+
     var clips = [];
 
     function enqueue (chaninfo) {
 	clips.push(chaninfo);
 	$('#notice span').text(clips.length);
-	if (clips.length == 1) { next_xmit() };
+        next_xmit();
     };
 
     next_xmit = function() {
+        if (!player.paused) { return };
+
 	var clip = clips[0];
 	console.log(clip);
 	if (clip) {
 	    // TODO:  Why can't I update the text as easy as the queue depth number
-	    $('#notice a').html(clip.designator + '<span class="ui-li-count">' + clips.length + '</span>');
+	    $('#notice a').html(clip.label + '<span class="ui-li-count">' + clips.length + '</span>');
 	    player.src = clip.url + '?file=' + clip.file;
-	    player.play();
+	    clips.shift();
 	}
     }
 
     player.onended = function() {
 	console.log('The audio has ended');
-	clips.shift();
 	$('#notice span').text(clips.length);
 	next_xmit();
     };
