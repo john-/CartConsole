@@ -3,9 +3,9 @@
 <head>
     <title>Cart Console</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://localhost/jquery/jquery.mobile-1.4.5.min.css" />
-    <script src="http://localhost/jquery/jquery-1.11.2.js"></script>
-    <script src="http://localhost/jquery/jquery.mobile-1.4.5.js"></script>
+    <link rel="stylesheet" href="../jquery/jquery.mobile-1.4.5.min.css" />
+    <script src="../jquery/jquery-1.11.2.js"></script>
+    <script src="../jquery/jquery.mobile-1.4.5.js"></script>
 </head>
 <body>
 <div data-role="page" data-dom-cache="false" id="main">
@@ -48,8 +48,8 @@
 
 <script>
     var plugins = [
-	{ "url" : "http://localhost:3000" },
-	{ "url" : "http://localhost:3001" }
+	{ "port" : "3000" },
+	{ "port" : "3001" }
     ];
 
     function loadPlugins () {
@@ -58,7 +58,8 @@
 	plugins.forEach( function(key, index) {
 
 	    // load info about the service and use it to set navbar
-	    $.getJSON( key.url + "/self" )
+            var base_url = "http://" + document.location.hostname + ":" + key.port;
+	    $.getJSON( base_url + "/self" )
 		.done(function( json ) {
 		    plugs_on.push(json.function);
 
@@ -105,15 +106,15 @@
 	    })
 		.fail(function( jqxhr, textStatus, error ) {
 		    var err = textStatus + ", " + error;
-		    console.log( "Could not load plugin: " + key.url + " Request Failed: " + textStatus );
+		    console.log( "Could not load plugin: " + base_url + " Request Failed: " + textStatus );
 	    });
 
 	    // load script needed by the service
-	    $.getScript( key.url + "/script" )
+	    $.getScript( base_url + "/script" )
 		.done(function( script, textStatus ) {
 	    })
 		.fail(function( jqxhr, settings, error ) {
-		    console.log("Script load error: " + key.url + " error: " + error);
+		    console.log("Script load error: " + base_url + " error: " + error);
 	    });
 
 	});
