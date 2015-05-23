@@ -49,7 +49,8 @@
 <script>
     var plugins = [
 	{ "port" : "3000" },
-	{ "port" : "3001" }
+	{ "port" : "3001" },
+	{ "port" : "3002" }
     ];
 
     function loadPlugins () {
@@ -149,7 +150,7 @@
     function enqueue (chaninfo) {
 	clips.push(chaninfo);
 	$('#notice span').text(clips.length);
-        next_xmit();
+        setTimeout( next_xmit(), (clips.length-1) * 2000 );
     };
 
     next_xmit = function() {
@@ -160,13 +161,15 @@
 	if (clip) {
 	    // TODO:  Why can't I update the text as easy as the queue depth number
 	    $('#notice a').html(clip.label + '<span class="ui-li-count">' + clips.length + '</span>');
+            console.log('setting source: ' + clip.file);
 	    player.src = clip.url + '?file=' + clip.file;
-	    clips.shift();
+	    //clips.shift();
 	}
     }
 
     player.onended = function() {
 	console.log('The audio has ended');
+        clips.shift();
 	$('#notice span').text(clips.length);
 	next_xmit();
     };
