@@ -10,7 +10,7 @@
 <body>
 <div data-role="page" data-dom-cache="false" id="main">
     <p>
-	<audio id="player" controls autoplay>
+	<audio id="player" controls>
 	Your browser does not support the audio element.
 	</audio>
     </p>
@@ -140,6 +140,7 @@
                 break;
             case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
                 console.log('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
+                player.play();   // an attempt to see if this allows next_xmit to do right thing after this error
 	        next_xmit();
                 break;
             default:
@@ -172,6 +173,7 @@
                 player.volume = 1.0;
             }
 	    player.src = clip.url + '?file=' + clip.file;
+            player.play();
 	    //clips.shift();
 	}
     }
