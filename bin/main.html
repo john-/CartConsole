@@ -86,7 +86,8 @@
 		    });
 
                     // long press on button to bring up config screen
-                    $( '#options ul li a' ).on( "taphold", function( event ) {
+                    $( '#options ul li a' ).bind( "taphold", function( event ) {
+                        event.preventDefault();
                         var config = $( this ).text().toLowerCase() + '_config';
                         window[config]();
                         //$( config ).popup( "open" );
