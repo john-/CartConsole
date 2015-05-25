@@ -140,8 +140,10 @@
                 break;
             case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
                 console.log('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
-                player.play();   // an attempt to see if this allows next_xmit to do right thing after this error
-	        next_xmit();
+                //player.play();   // an attempt to see if this allows next_xmit to do right thing after this error
+	        //next_xmit(1);
+                //player.ondended();
+                clip_over();
                 break;
             default:
                 console.log('An unknown error occurred.');
@@ -176,9 +178,17 @@
             player.play();
 	    //clips.shift();
 	}
-    }
+    };
 
     player.onended = function() {
+        clip_over();
+	//console.log('The audio has ended');
+        //clips.shift();
+	//$('#notice span').text(clips.length);
+	//next_xmit();
+    };
+
+    clip_over = function() {
 	console.log('The audio has ended');
         clips.shift();
 	$('#notice span').text(clips.length);
