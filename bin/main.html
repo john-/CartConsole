@@ -47,6 +47,7 @@
 </div><!-- /page -->
 
 <script>
+
     var plugins = [
 	{ "port" : "3000" },
 	{ "port" : "3001" },
@@ -99,6 +100,8 @@
 			    var func = ui.newPanel.attr('id') + '_page';
                             console.log("about to execute: " + func);
 			    window[func]();
+                            var close_func = ui.oldPanel.attr('id') + '_page';
+			    window[close_func]();  // allow tab to take action after it is no longer active
 		    }    });
 
 
@@ -162,6 +165,11 @@
 	    // TODO:  Why can't I update the text as easy as the queue depth number
 	    $('#notice a').html(clip.label + '<span class="ui-li-count">' + clips.length + '</span>');
             console.log('setting source: ' + clip.file);
+            if (clip.hasOwnProperty('volume')) {
+                player.volume = clip.volume;
+            } else {
+                player.volume = 1.0;
+            }
 	    player.src = clip.url + '?file=' + clip.file;
 	    //clips.shift();
 	}
