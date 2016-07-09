@@ -156,9 +156,16 @@
     var clips = [];
 
     function enqueue (chaninfo) {
-	clips.push(chaninfo);
+        clips.push(chaninfo);
+        if (clips.length > 10) {
+            clips.splice(1,1)      // throttle audio by removing next (not current) clip
+        }
 	$('#notice span').text(clips.length);
-        setTimeout( next_xmit(), (clips.length-1) * 2000 );
+        if (clips.length == 0) {
+            next_xmit();
+        } else {  // I think a puase is needed to avoid timing issue with audio player
+             setTimeout( next_xmit(),  2000 );
+        }
     };
 
     next_xmit = function() {
