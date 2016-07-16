@@ -143,7 +143,8 @@
                 //player.play();   // an attempt to see if this allows next_xmit to do right thing after this error
 	        //next_xmit(1);
                 //player.ondended();
-                player.play();
+
+                player.load();  // this was attempt to handle case where player stops but it has not been confirmed to work
                 clip_over();
                 break;
             default:
@@ -163,7 +164,7 @@
 	$('#notice span').text(clips.length);
         if (clips.length == 0) {
             next_xmit();
-        } else {  // I think a puase is needed to avoid timing issue with audio player
+        } else {  // I think a pause is needed to avoid timing issue with audio player
              setTimeout( next_xmit(),  2000 );
         }
     };
@@ -182,6 +183,7 @@
             } else {
                 player.volume = 1.0;
             }
+
 	    player.src = clip.url + '?file=' + clip.file;
             player.play();
 	    //clips.shift();
