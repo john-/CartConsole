@@ -54,6 +54,8 @@
 	{ "port" : "3002" }
     ];
 
+    //var curTab;  // apparently current tab in navbar is not generally available
+
     function loadPlugins () {
 
 	var plugs_on = [];
@@ -98,7 +100,8 @@
                     // call service's page loader when tab is selected
 		    $( "#switcher" ).tabs({
 			activate: function( event, ui ) { 
-			    var func = ui.newPanel.attr('id') + '_page';
+                            //curTab = ui.newPanel.attr('id');
+                            var func = ui.newPanel.attr('id') + '_page';
                             console.log("about to execute: " + func);
 			    window[func]();
                             var close_func = ui.oldPanel.attr('id') + '_page';
@@ -204,9 +207,24 @@
 
     clip_over = function() {
 	console.log('The audio has ended');
-        clips.shift();
-	$('#notice span').text(clips.length);
+        var last = clips.shift();
+
+        $('#notice span').text(clips.length);
 	next_xmit();
+
+        // ugh.  The msg itself should contain directions for follow-up actions.
+        // for now only perform function if scanner is source
+        if (last.xmit_key) {
+            scanner_afterclip(last);
+        }
+
+        //var afterclip = curTab + '_afterclip';
+        //console.log(afterclip);
+        //var fn = window[ curTab + '_afterclip' ];
+        //if (typeof fn === 'function') {
+        //    fn(last);
+        //}
+
     };
 
     $(document).on("pagecreate",function(){
