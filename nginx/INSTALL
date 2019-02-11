@@ -1,0 +1,8 @@
+
+cd cart_console/nginx
+sudo cp sites-available_cart /etc/nginx/sites-available/cart
+sudo mkdir /usr/share/nginx/{cart_console,jquery}
+sudo ln -s /etc/nginx/sites-available/cart /etc/nginx/sites-enabled/cart
+sudo rm /etc/nginx/sites-enabled/default
+sudo cp index.html /usr/share/nginx/cart_console
+sudo systemctl restart nginx

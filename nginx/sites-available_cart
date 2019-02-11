@@ -1,0 +1,28 @@
+server {
+
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    # Make site accessible from http://localhost/
+    server_name localhost;
+
+    location /jquery/ {
+        root /usr/share/nginx;
+        expires 30d;
+    }
+
+    location /cart_console/ {
+        root /usr/share/nginx;
+        index main.html;
+        expires 1d;
+    }
+
+    #location /heatmaps/ {
+    #    root /usr/share/nginx;
+    #    autoindex on;
+    #}
+
+}
