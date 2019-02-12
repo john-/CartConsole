@@ -6,3 +6,8 @@ sudo ln -s /etc/nginx/sites-available/cart /etc/nginx/sites-enabled/cart
 sudo rm /etc/nginx/sites-enabled/default
 sudo cp index.html /usr/share/nginx/cart_console
 sudo systemctl restart nginx
+
+cd /usr/share/nginx/jquery
+sudo wget http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css
+sudo wget http://code.jquery.com/jquery-1.11.2.js
+sudo wget http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js
