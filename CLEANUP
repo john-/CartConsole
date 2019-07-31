@@ -1,0 +1,21 @@
+# Shut down the applications to free up log files:
+sudo systemctl stop rtl_fm-scanner@johna
+sudo systemctl stop leaderboard@johna
+sudo systemctl stop telem_control@johna
+
+# Use the cart_cli to clean up files and database
+/cart/cart_cli/script/cart_cli clean cleanit
+/cart/cart_cli/script/cart_cli prune /cart/data/wav
+
+# Remove work files
+rm /cart/rtl_fm-scanner/work/*.wav
+rm /cart/leaderboard/archive/audio/*.audio
+rm /cart/leaderboard/archive/leaderboards/*.raw
+rm /cart/telem_control/archive/audio/*.audio
+
+# truncate logs
+cp /dev/null /cart/rtl_fm-scanner/log/rtl_fm-scanner.log
+cp /dev/null /cart/leaderboard/log/leaderboard.log
+cp /dev/null /cart/telem_control/log/telem_control.log
+
+echo "make a backup following the instructions in /cart/data/backup"
