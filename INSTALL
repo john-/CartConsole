@@ -1,6 +1,6 @@
 
 cd /cart/cart_console/nginx
-sudo cp index.html /usr/share/nginx/html
+sudo cp index.html /usr/share/nginx/cart_console
 sudo cp sites-available_cart /etc/nginx/sites-available/cart
 
 sudo mkdir /usr/share/nginx/{cart_console,jquery}
