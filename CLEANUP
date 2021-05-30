@@ -1,4 +1,5 @@
 # Shut down the applications to free up log files:
+sudo systemctl stop xmit_processor@johna
 sudo systemctl stop rtl_fm-scanner@johna
 sudo systemctl stop leaderboard@johna
 sudo systemctl stop telem_control@johna
@@ -14,6 +15,7 @@ rm /cart/leaderboard/archive/leaderboards/*.raw
 rm /cart/telem_control/archive/audio/*.audio
 
 # truncate logs
+cp /dev/null /cart/xmit_processor/xmit_processor/xmit_processor.log
 cp /dev/null /cart/rtl_fm-scanner/log/rtl_fm-scanner.log
 cp /dev/null /cart/leaderboard/log/leaderboard.log
 cp /dev/null /cart/telem_control/log/telem_control.log

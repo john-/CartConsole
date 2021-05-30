@@ -191,7 +191,9 @@
                 player.volume = 1.0;
             }
 
+	    //player.src = clip.url + '?file=' + clip.file + '#t=1.0,3.0';
 	    player.src = clip.url + '?file=' + clip.file;
+	    //player.src = clip.url + '?file=' + clip.file + '#t=0.25,' + clip.duration - 0.25;
             player.play();
 	    //clips.shift();
 	}
@@ -199,11 +201,14 @@
 
     player.onended = function() {
         clip_over();
-	//console.log('The audio has ended');
-        //clips.shift();
-	//$('#notice span').text(clips.length);
-	//next_xmit();
     };
+
+    //player.onpause = function() {
+    //    player.src = '';
+    //    player.play();
+    //    //player.stop();
+    //    //clip_over();
+    //};
 
     clip_over = function() {
 	console.log('The audio has ended');
