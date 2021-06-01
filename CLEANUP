@@ -9,7 +9,6 @@ sudo systemctl stop telem_control@johna
 /cart/cart_cli/script/cart_cli prune /cart/data/wav
 
 # Remove work files
-rm /cart/rtl_fm-scanner/work/*.wav
 rm /cart/leaderboard/archive/audio/*.audio
 rm /cart/leaderboard/archive/leaderboards/*.raw
 rm /cart/telem_control/archive/audio/*.audio
