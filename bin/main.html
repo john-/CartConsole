@@ -9,13 +9,15 @@
 </head>
 <body>
 <div data-role="page" data-dom-cache="false" id="main">
-    <audio style="float:left;" id="player" controls>
+
+    <ul style="float:left; width:60%" data-role="listview">
+	<li id="notice"><a href="#">Notification area<span class="ui-li-count">0</span></a></li>
+    </ul>
+
+    <audio style="float:right;" id="player" controls>
 	Your browser does not support the audio element.
     </audio>
 
-    <ul data-role="listview">
-	<li id="notice"><a href="#">Notification area<span class="ui-li-count">0</span></a></li>
-    </ul>
 
     <div data-role="tabs" id="switcher">
     </div>
